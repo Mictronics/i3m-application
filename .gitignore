@@ -1,4 +1,5 @@
 /Release/
+/Debug/
 /Config Section/
 *.d
 *.o
