@@ -177,14 +177,14 @@
         <documentation help="http://asf.atmel.com/docs/3.32.0/common.applications.user_application.stk600-rc064x.atxmega256a3u/html/index.html" />
         <offline-documentation help="" />
         <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.32.0" />
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.36.0" />
         </dependencies>
         <project id="common.applications.user_application.stk600-rc064x.atxmega256a3u" value="Add" config="" content-id="Atmel.ASF" />
         <board id="board.stk600-rc064x.atxmega256a3u" value="Add" config="" content-id="Atmel.ASF" />
       </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
-    <avrtoolserialnumber>J41800059197</avrtoolserialnumber>
+    <avrtoolserialnumber>J41800081191</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x1E9842</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
@@ -205,7 +205,7 @@
         <InterfaceName>PDI</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
-      <ToolNumber>J41800059197</ToolNumber>
+      <ToolNumber>J41800081191</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterface>PDI</avrtoolinterface>
@@ -266,6 +266,11 @@
       <Value>NDEBUG</Value>
     </ListValues>
   </avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.preprocessor.UndefSymbols>
+    <ListValues>
+      <Value>AIRTOP3_LOGO</Value>
+    </ListValues>
+  </avrgcc.compiler.preprocessor.UndefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
       <Value>..</Value>
