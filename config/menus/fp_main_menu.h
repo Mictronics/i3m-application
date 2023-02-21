@@ -96,7 +96,7 @@ struct cnf_image_node  __attribute__((section (".configData"))) main_info_image 
 
 struct cnf_image_node  __attribute__((section (".configData"))) dashboard_image = {
 	.image = {
-		.bitmap_progmem = screensaver_bits,
+		.bitmap_progmem = screen_saver_bits,
 		.width = logo_width,
 		.height = logo_height
 	},

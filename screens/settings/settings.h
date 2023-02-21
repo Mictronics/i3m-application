@@ -12,6 +12,7 @@
 #include "gfx/gfx_components/gfx_information.h"
 
 int gfx_information_init_set_brightness(struct gfx_information *info);
+int gfx_information_init_set_screen_saver(struct gfx_information *info);
 int gfx_information_init_show_logo(struct gfx_information *info);
 int gfx_information_init_screen_off(struct gfx_information *info);
 

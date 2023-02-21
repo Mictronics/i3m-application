@@ -46,12 +46,12 @@ static int gfx_information_init_generic(struct gfx_information *info, enum infor
 static int gfx_information_init_type(struct gfx_information *info, enum information_type info_type)
 {
 	switch(info_type) {
-	case SCREEN_OFF:
-		return gfx_information_init_screen_off(info);
 	case SHOW_LOGO:
 		return gfx_information_init_show_logo(info);
 	case SET_BRIGHTNESS:
 		return gfx_information_init_set_brightness(info);
+	case SET_SCREEN_SAVER:
+		return gfx_information_init_set_screen_saver(info);
 	case SHOW_SERIAL_NUMBER:
 		return gfx_information_init_show_serial_number(info);
 	case SHOW_APP_VERSION:

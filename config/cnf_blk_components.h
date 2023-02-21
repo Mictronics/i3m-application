@@ -19,6 +19,7 @@ typedef uint8_t gfx_mono_color_t;
 
 enum information_type {
 	SET_BRIGHTNESS,
+	SET_SCREEN_SAVER,
 	SHOW_SERIAL_NUMBER,
 	SHOW_APP_VERSION,
 	SHOW_PART_NUMBER,
@@ -32,7 +33,6 @@ enum information_type {
 	SHOW_CPU_TEMPERTURE,
 	SHOW_GPU_TEMPERTURE,
 	SHOW_LOGO,
-	SCREEN_OFF,
 	SET_BOIS_STATE,
 	SHOW_POST_CODE,
 	SHOW_USB_SERIAL_INPUT,

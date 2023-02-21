@@ -12,15 +12,15 @@
 
 char __attribute__((section (".configData"))) fp_settings_menu_title[] = "Settings";
 char __attribute__((section (".configData"))) brightness_title_progmem[] = "Adjust Brightness";
+char __attribute__((section (".configData"))) screen_saver_title_progmem[] = "Adjust Screen Saver";
 char __attribute__((section (".configData"))) logo_title_progmem[] = "Display Logo";
-char __attribute__((section (".configData"))) screen_off_title_progmem[] = "Turn-off Screen";
 char __attribute__((section (".configData"))) settings_back_to_main_title_progmem[] = "Back";
 
 struct gfx_mono_menu  __attribute__((section (".configData"))) settings_menu = {
 	.title = fp_settings_menu_title,
 	.strings[0] = brightness_title_progmem,
-	.strings[1] = logo_title_progmem,
-	.strings[2] = screen_off_title_progmem,
+	.strings[1] = screen_saver_title_progmem,
+	.strings[2] = logo_title_progmem,
 	.strings[3] = settings_back_to_main_title_progmem,
 	.num_elements = 4,
 	.current_selection = 0
@@ -34,7 +34,7 @@ struct cnf_info_node __attribute__((section (".configData"))) brightness_info = 
 		.y = 15,
 		.max_length = 8
 	},
-	.font_id = GLCD_FONT_CONSOLAS_18X28_NUM,
+	.font_id = GLCD_FONT_COURIER_NEW_13X21,//GLCD_FONT_CONSOLAS_18X28_NUM,
 	.next = 0
 };
 
@@ -54,6 +54,34 @@ struct cnf_frame __attribute__((section (".configData"))) brightness_frame = {
 	.images_head = 0
 };
 
+struct cnf_info_node __attribute__((section (".configData"))) screen_saver_info = {
+	.info = {
+		.info_type = SET_SCREEN_SAVER,
+		.information = 0,
+		.x = 38,
+		.y = 15,
+		.max_length = 8
+	},
+	.font_id = GLCD_FONT_COURIER_NEW_13X21,//GLCD_FONT_CONSOLAS_18X28_NUM,
+	.next = 0
+};
+
+struct cnf_label_node __attribute__((section (".configData"))) screen_saver_title = {
+	.label = {
+		.text = screen_saver_title_progmem,
+		.x = (128 - 20 * 5)  / 2 - 5,
+		.y = 56,
+	},
+	.font_id = GLCD_FONT_SYSFONT_5X7,
+	.next = 0
+};
+
+struct cnf_frame __attribute__((section (".configData"))) screen_saver_frame = {
+	.labels_head = &screen_saver_title,
+	.infos_head = &screen_saver_info,
+	.images_head = 0
+};
+
 struct cnf_info_node __attribute__((section (".configData"))) show_logo_info = {
 	.info = {
 		.info_type = SHOW_LOGO,
@@ -62,31 +90,13 @@ struct cnf_info_node __attribute__((section (".configData"))) show_logo_info = {
 		.y = 15,
 		.max_length = 8
 	},
-	.font_id = GLCD_FONT_CONSOLAS_18X28_NUM,
+	.font_id = GLCD_FONT_COURIER_NEW_13X21,//GLCD_FONT_CONSOLAS_18X28_NUM,
 	.next = 0
 };
 
 struct cnf_frame __attribute__((section (".configData"))) show_logo_frame = {
 	.labels_head = 0,
 	.infos_head = &show_logo_info,
-	.images_head = 0
-};
-
-struct cnf_info_node __attribute__((section (".configData"))) screen_off_info = {
-	.info = {
-		.info_type = SCREEN_OFF,
-		.information = 0,
-		.x = 50,
-		.y = 15,
-		.max_length = 8
-	},
-	.font_id = GLCD_FONT_CONSOLAS_18X28_NUM,
-	.next = 0
-};
-
-struct cnf_frame __attribute__((section (".configData"))) screen_off_frame = {
-	.labels_head = 0,
-	.infos_head = &screen_off_info,
 	.images_head = 0
 };
 
@@ -98,20 +108,20 @@ struct cnf_action_node __attribute__((section (".configData"))) settings_menu_go
 	.next = 0
 };
 
-struct cnf_action_node __attribute__((section (".configData"))) screen_off_action = {
-	.action = {
-		.type = ACTION_TYPE_SHOW_FRAME,
-		.frame = &screen_off_frame
-	},
-	.next = &settings_menu_go_back_action
-};
-
 struct cnf_action_node __attribute__((section (".configData"))) show_logo_action = {
 	.action = {
 		.type = ACTION_TYPE_SHOW_FRAME,
 		.frame = &show_logo_frame
 	},
-	.next = &screen_off_action
+	.next = &settings_menu_go_back_action
+};
+
+struct cnf_action_node __attribute__((section (".configData"))) show_screen_saver_action = {
+	.action = {
+		.type = ACTION_TYPE_SHOW_FRAME,
+		.frame = &screen_saver_frame
+	},
+	.next = &show_logo_action
 };
 
 struct cnf_action_node __attribute__((section (".configData"))) show_brightness_action = {
@@ -119,7 +129,7 @@ struct cnf_action_node __attribute__((section (".configData"))) show_brightness_
 		.type = ACTION_TYPE_SHOW_FRAME,
 		.frame = &brightness_frame
 	},
-	.next = &show_logo_action
+	.next = &show_screen_saver_action
 };
 
 struct cnf_image_node  __attribute__((section (".configData"))) settings_back_to_main_image = {
@@ -131,22 +141,22 @@ struct cnf_image_node  __attribute__((section (".configData"))) settings_back_to
 	.next = 0,
 };
 
-struct cnf_image_node  __attribute__((section (".configData"))) screen_off_image = {
-	.image = {
-		.bitmap_progmem = screen_off_bits,
-		.width = logo_width,
-		.height = logo_height
-	},
-	.next = &settings_back_to_main_image
-};
-
 struct cnf_image_node  __attribute__((section (".configData"))) show_logo_image = {
 	.image = {
 		.bitmap_progmem = show_logo_bits,
 		.width = logo_width,
 		.height = logo_height
 	},
-	.next = &screen_off_image
+	.next = &settings_back_to_main_image
+};
+
+struct cnf_image_node  __attribute__((section (".configData"))) settings_screen_saver_image = {
+	.image = {
+		.bitmap_progmem = screen_off_bits,
+		.width = logo_width,
+		.height = logo_height
+	},
+	.next = &show_logo_image
 };
 
 struct cnf_image_node  __attribute__((section (".configData"))) settings_brightness_image = {
@@ -155,7 +165,7 @@ struct cnf_image_node  __attribute__((section (".configData"))) settings_brightn
 		.width = logo_width,
 		.height = logo_height
 	},
-	.next = &show_logo_image
+	.next = &settings_screen_saver_image
 };
 
 struct cnf_menu   __attribute__((section (".configData"))) airtop_settings_menu_cnf = {

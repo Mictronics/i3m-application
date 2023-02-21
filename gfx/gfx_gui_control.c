@@ -87,9 +87,12 @@ void gfx_switch_to_menu(struct gfx_graphic_menu *graphic_menu)
 	current_menu = graphic_menu;
 	graphic_menu->draw(graphic_menu);
 }
-
+extern void screen_saver_on(void);
+extern void screen_saver_task_reset(void);
 void gfx_handle_button(uint8_t keycode)
 {
+	screen_saver_on();
+	screen_saver_task_reset();
 	if (gfx_in_menu())
 		current_menu->handle_button(current_menu, keycode);
 	else

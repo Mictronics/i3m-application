@@ -24,6 +24,7 @@
 extern struct scheduler_task adc_tick_task;
 extern struct scheduler_task pending_req_tick_task;
 extern struct scheduler_task screen_tick_task;
+extern struct scheduler_task screen_saver_tick_task;
 
 struct tc_scheduler_task {
 	struct scheduler_task task;
@@ -33,10 +34,7 @@ struct tc_scheduler_task {
 
 volatile void *tc_module = NULL;
 
-static bool cmp_enable = false;
-
-#define TIMER_MAX_VALUE			0xffff
-#define NUMBER_OF_TICK_TASKS	3
+#define NUMBER_OF_TICK_TASKS	4
 static struct tc_scheduler_task tick_tasks_to_do[NUMBER_OF_TICK_TASKS] = {{{ 0 }}};
 
 static struct tc_scheduler_task new_tick_task(struct scheduler_task task)
@@ -54,10 +52,17 @@ static void task_set_timer(int task_index)
 	task->offset = task->task.get_recur_period();
 }
 
+/**
+ * TCC0 overflow called every 100ms
+ * See tc_init in main.c
+ *
+ */
 static void tc_overflow_callback(void)
 {
+	//ioport_toggle_pin(FP_DBG_CLK_OUT_PIN);
 	tc_clear_overflow(tc_module);
 	array_foreach(struct tc_scheduler_task, tick_tasks_to_do, index) {
+		// Decrease recurrence period by 100ms each overflow
 		tick_tasks_to_do[index].offset -= 0.1;
 		if (tick_tasks_to_do[index].offset <= 0) {
 			insert_work(tick_tasks_to_do[index].task.work);
@@ -75,6 +80,7 @@ void scheduler_init(volatile void *tc)
     tick_tasks_to_do[0] = new_tick_task(pending_req_tick_task);
 	tick_tasks_to_do[1] = new_tick_task(adc_tick_task);
 	tick_tasks_to_do[2] = new_tick_task(screen_tick_task);
+	tick_tasks_to_do[3] = new_tick_task(screen_saver_tick_task);
 
 	array_foreach(struct tc_scheduler_task, tick_tasks_to_do, index)
 		task_set_timer(index);
