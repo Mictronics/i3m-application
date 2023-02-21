@@ -10,12 +10,14 @@
 #include "layout.h"
 
 #ifndef APPLICATION_VER_MSB
-#define APPLICATION_VER_MSB 0
+#define APPLICATION_VER_MSB 3
 #endif
 
 #ifndef APPLICATION_VER_LSB
 #define APPLICATION_VER_LSB 1
 #endif
+
+void apply_app_settings(void);
 
 static void setup_brightness_settings(void)
 {
