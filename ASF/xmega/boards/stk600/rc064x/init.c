@@ -80,6 +80,9 @@ void board_init(void)
 	ioport_configure_pin(LED6_GPIO, IOPORT_DIR_OUTPUT | IOPORT_INIT_HIGH);
 	ioport_configure_pin(LED7_GPIO, IOPORT_DIR_OUTPUT | IOPORT_INIT_HIGH);
 
+	// Debug output pin for scheduler and task clock timing
+	ioport_configure_pin(FP_DBG_CLK_OUT_PIN, IOPORT_DIR_OUTPUT | IOPORT_INIT_LOW);		
+
 	//PORTF contains the UI buttons and the power states
 	uint8_t sreg = SREG;
 	uint8_t power_pin_cfg =(uint8_t)  PORT_ISC_BOTHEDGES_gc | PORT_OPC_PULLUP_gc;
