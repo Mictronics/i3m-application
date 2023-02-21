@@ -30,7 +30,7 @@ static void usb_show_frame(struct gfx_information *info)
 			.pixmap = NULL,
 		},
 	};
-	bitmap.data.pixmap = buf;
+	bitmap.data.pixmap = (gfx_mono_color_t *)buf;
 	gfx_mono_generic_put_bitmap(&bitmap, 0, 0);
 }
 
