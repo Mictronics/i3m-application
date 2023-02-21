@@ -10,6 +10,7 @@
 #include "gfx/gfx_components/gfx_graphic_menu.h"
 #include "work-queue/work.h"
 #include "scheduler/scheduler.h"
+#include "asf.h"
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -35,8 +36,13 @@ static bool need_to_update_req(enum information_type info_type)
 	return false;
 }
 
+/**
+ * Called with 1s tick.
+ *
+ */
 static void update_requests(void *data)
 {
+	//ioport_toggle_pin_level(FP_DBG_CLK_OUT_PIN);
 	i2c_buffer.layout.hddtr = !i2c_buffer.layout.hddtr && need_to_update_req(SHOW_HDD_TEMPERTURE);
 	i2c_buffer.layout.cpufr = !i2c_buffer.layout.cpufr && need_to_update_req(SHOW_CPU_FREQUENCY);
 	i2c_buffer.layout.cputr = !i2c_buffer.layout.cputr && need_to_update_req(SHOW_CPU_TEMPERTURE);
