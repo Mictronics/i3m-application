@@ -13,13 +13,14 @@
 #include "lib/sleep.h"
 #include "asf.h"
 
-void apply_app_settings(void);
+extern void apply_app_settings(void);
 
 static void tc_init(void)
 {
 	void *tc = &TCC0;
 	tc_set_wgm(tc, TC_WG_NORMAL);
-	tc_write_period(tc, 0xFFFF);
+	// Set TCC0 overflow every 100ms, driving the scheduler
+	tc_write_period(tc, 0x0C3A);
 	tc_disable_cc_channels(tc, TC_CCAEN);
 	tc_write_clock_source(tc, TC_CLKSEL_DIV1024_gc);
 }
@@ -33,12 +34,12 @@ void my_callback_cdc_disable(void)
 {
 	stdio_usb_disable();
 }
-
+/*
 static void usb_init(void)
 {
 	udc_start();
 }
-
+*/
 static void adc_init(void)
 {
 	ADC_t *adc = &ADCA;
