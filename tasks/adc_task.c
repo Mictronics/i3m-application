@@ -35,8 +35,14 @@ static double adc_avg(void)
 	return power_sum / i;
 }
 
+
+/**
+ * Called with 500ms tick.
+ *
+ */
 static void update_adc(void *data)
 {
+	//ioport_toggle_pin_level(FP_DBG_CLK_OUT_PIN);
 	double avg = adc_avg();
 	long power = (avg * 0.10137 + 2.9) * 1.5;
 	if (power >= 6 && power <= 360) {
@@ -55,7 +61,7 @@ static struct work adc_work = { .do_work = update_adc };
 
 static double adc_get_recur_period(void)
 {
-	return 0.3;
+	return 0.5;
 }
 
 struct scheduler_task adc_tick_task = {
