@@ -39,14 +39,23 @@ int gfx_information_init_show_power_state(struct gfx_information *info)
 
 static void sprintf_power_data(struct gfx_information *info, char *output_str)
 {
+#ifdef AIRTOP3_HW
 	long power = (computer_data.details.adc * 0.10137 + 2.9) * 1.5;
-
 	if (!computer_data.details.adc_set)
 		sprintf(output_str, "-");
 	else if (power >= 6 && power <= 360)
 		sprintf(output_str, "%2ldW", power);
 	else
 		sprintf(output_str, "<5W");
+#else
+	long power = (computer_data.details.adc * 0.10137 + 2.9);
+	if (!computer_data.details.adc_set)
+		sprintf(output_str, "-");
+	else if (power >= 6 && power <= 300)
+		sprintf(output_str, "%2ldW", power);
+	else
+		sprintf(output_str, "<5W");
+#endif
 }
 
 int gfx_information_init_show_power_data(struct gfx_information *info)

@@ -44,8 +44,13 @@ static void update_adc(void *data)
 {
 	//ioport_toggle_pin_level(FP_DBG_CLK_OUT_PIN);
 	double avg = adc_avg();
+#ifdef AIRTOP3_HW
 	long power = (avg * 0.10137 + 2.9) * 1.5;
 	if (power >= 6 && power <= 360) {
+#else
+	long power = (avg * 0.10137 + 2.9);
+	if (power >= 6 && power <= 300) {
+#endif
 		computer_data.details.adc = avg;
 		computer_data.details.adc_set = 1;
 		current_power = power;
