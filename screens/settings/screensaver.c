@@ -17,8 +17,8 @@
 #define MIN_SCREEN_SAVER_TIME		5
 #define MAX_SCREEN_SAVER_TIME_MIN	15
 
-void screen_saver_off(void);
 void screen_saver_on(void);
+uint8_t screen_saver_off(void);
 uint8_t screen_saver_get_time_seconds(void);
 
 typedef enum {
@@ -29,13 +29,18 @@ typedef enum {
 static screen_saver_unit_e screen_saver_unit = SCREEN_SAVER_DEFAULT_UNIT;
 static uint8_t screen_saver_enabled = SCREEN_SAVER_DEFAULT_ENABLE;
 static uint8_t screen_saver_time = SCREEN_SAVER_DEFAULT_TIME;
-
-void screen_saver_off(void){
-	ssd1306_display_off();
-}
+static uint8_t screen_saver_status = 0;
 
 void screen_saver_on(void){
+	ssd1306_display_off();
+	screen_saver_status = 1;
+}
+
+uint8_t screen_saver_off(void){
+	uint8_t was = screen_saver_status;
 	ssd1306_display_on();
+	screen_saver_status = 0;
+	return was;
 }
 
 

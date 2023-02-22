@@ -10,7 +10,7 @@
 
 void screen_saver_task_reset(void);
 extern uint8_t screen_saver_get_time_seconds(void);
-extern void screen_saver_off(void);
+extern void screen_saver_on(void);
 volatile int screen_saver_timeout = 0;
 
 void screen_saver_task_reset(void) {
@@ -32,7 +32,7 @@ static void save_screen(void *data)
 	if(screen_saver_timeout < t) {
 		++screen_saver_timeout;
 	} else {
-		screen_saver_off();
+		screen_saver_on();
 	}
 	
 }
